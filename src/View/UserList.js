@@ -1,8 +1,36 @@
 import React from "react";
-import { Text } from "react-native";
+import { View, Text, FlatList } from "react-native";
+import users from '../data/Users'
+import { Avatar, ListItem } from "react-native-elements";
 
 export default props => {
+    
+    function getUseritem({ item: user }) {
+        return(
+            <ListItem
+            key={user.id}
+            bottomDivider
+            onPress={() => {
+                props.navigation.navigate('UserForm')
+            }}
+            >
+                <Avatar 
+                    source ={{uri: user.avatarUrl}}
+                />
+                <ListItem.Content>
+                    <ListItem.Title>{user.name}</ListItem.Title>
+                    <ListItem.Subtitle>{user.email}</ListItem.Subtitle>
+                </ListItem.Content>
+            </ListItem>
+        )
+    }
     return(
-        <Text>UserList</Text>
+        <View>
+            <FlatList
+                keyExtractor={ user => user.id.toString()}
+                data={users}
+                renderItem={getUseritem}
+            />
+        </View>
     )
 }
