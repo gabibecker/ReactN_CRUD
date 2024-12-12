@@ -2,7 +2,8 @@ import React from "react";
 import { Text } from "react-native";
 
 export default props => {
+    const [user, setUser] = useState(props.route.params ? props.route.params : {})
     return(
-        <Text>UserForm</Text>
+        <Text>{user.id}</Text>
     )
 }
