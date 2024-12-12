@@ -3,12 +3,23 @@ import Users from "../data/Users";
 
 const initialState = { users: Users }
 const UsersContext = createContext({})
+const actions = {
+    deleteUser(state, action) {
+        if(action.type === 'deleteUser') {
+            const user = action.payload
+            return {
+                ...state,
+                users: state.users.filter(u => u.id !== user.id)
+            }
+        }
+    }
+}
 
 export const UsersProvider = props => {
 
     function reducer(state, action) {
-        console.warn(action)
-        return state   
+        const fn = actions[action.type]
+        return fn ? fn(state, action) : state    
     }
 
     const [state, dispatch] = useReducer(reducer, initialState)
