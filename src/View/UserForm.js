@@ -1,51 +1,60 @@
-import React, { useState } from "react";
-import { StyleSheet, Text, TextInput, View } from "react-native";
-import { Button } from "react-native-elements";
+import React, { useContext, useState } from "react";
+import { Button, StyleSheet, Text, TextInput, View } from "react-native";
+import UsersContext from "../context/UsersContext";
 
-export default ({route, navigation}) => {
+
+
+export default ({ route, navigation }) => {
+
     const [user, setUser] = useState(route.params ? route.params : {})
-    return(
-        <View style = {style.form}>
-            <Text>Nome</Text>
+    const {dispatch} = useContext(UsersContext)
+
+    return (
+        <View style={style.form}>
+            <Text>Name</Text>
             <TextInput
                 style={style.input}
-                onChange={name => setUser({...user, name})}
+                onChangeText={name => setUser({ ...user, name })}
                 placeholder="Informe o Nome"
-                value={ user.name}
+                value={user.name}
             />
-            <Text>E-mail</Text>
+            <Text>Email</Text>
             <TextInput
                 style={style.input}
-                onChange={email => setUser({...user, email})}
-                placeholder="Informe o E-mail"
-                value={ user.email}
+                onChangeText={email => setUser({ ...user, email })}
+                placeholder="Informe o Email"
+                value={user.email}
             />
             <Text>URL do Avatar</Text>
             <TextInput
                 style={style.input}
-                onChange={avatarUrl => setUser({...user, avatarUrl})}
-                placeholder="Informe o a URL do Avatar"
-                value={ user.avatarUrl}
+                onChangeText={avatarUrl => setUser({ ...user, avatarUrl })}
+                placeholder="Informe a Url do Avatar"
+                value={user.avatarUrl}
             />
-            <Button 
-                title={"Salvar"}
+            <Button
+                title="Salvar"
                 onPress={() => {
+                    dispatch({
+                        type: user.id ? 'updateUser' : 'createUser',
+                        payload: user,
+                    })
                     navigation.goBack()
                 }}
             />
         </View>
-        
     )
 }
 
+
 const style = StyleSheet.create({
-    form: {
-        padding: 20
-    },
     input: {
         height: 40,
         borderColor: 'gray',
         borderWidth: 1,
-        marginBottom: 18,
+        marginBottom: 15,
+    },
+    form: {
+        padding: 12,
     }
 })
