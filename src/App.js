@@ -5,7 +5,7 @@ import UserList from "./View/UserList";
 import UserForm from "./View/UserForm";
 import { Button, Icon } from "react-native-elements";
 
-const Stack = createNativeStackNavigator()
+const Stack = createNativeStackNavigator();
 
 export default props => {
     return (
@@ -16,19 +16,17 @@ export default props => {
                 <Stack.Screen
                     name="UserList"
                     component={UserList}
-                    options={() => {
-                      return {
-                        title: "Lista de Usuários",
-                        headerRight: () => {
-                            <Button
-                                type="clear"
-                                icon={<Icon name="add" size={25} color="white"/>}
-                                onPress={() => {
-                                    
-                                }}
-                            />
+                    options={({navigation}) => {
+                        return {
+                            title: "Lista de Usuários",
+                            headerRight: () => (
+                                <Button
+                                    type="clear"
+                                    icon={<Icon name="add" size={25} color="white" />}
+                                    onPress={() => navigation.navigate("UserForm")}
+                                />
+                            )
                         }
-                      }  
                     }}
                 />
                 <Stack.Screen
@@ -40,15 +38,15 @@ export default props => {
                 />
             </Stack.Navigator>
         </NavigationContainer>
-    )
-}
+    );
+};
 
 const screenOptions = {
     headerStyle: {
-        backgroundColor: '#F4511e'
+        backgroundColor: '#F4511e',
     },
     headerTintColor: '#fff',
     headerTitleStyle: {
-        fontWeight: 'bold'
-    }
-}
+        fontWeight: 'bold',
+    },
+};
